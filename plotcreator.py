@@ -3,15 +3,15 @@ import matplotlib.pyplot as plt
 from typing import List
 from utils import Line
 
-def lineplot(*lines: plt.plot):
+def lineplot(x: list, y: list, **kwargs):
     fig, ax = plt.subplots()
 
-    for line in lines:
-        ax.plot(line.x, line.y, color=line.color, label=line.label, linestyle=line.linestyle, alpha=line.alpha) # There's gotta be a better way but I'm just too lazy
+    ax.plot(x, y, **kwargs)
 
-    plt.xticks(list(lines[0].x)[::15]) # TODO: Automatically calculate ticks to fit on screen
-    plt.yticks(range(0, max(lines[0].y)+500, 500))
-
+    xlen = len(x)
+    ymax = max(y)
+    plt.xticks(list(x)[::xlen//5])
+    plt.yticks(range(0, ymax+ymax//10, min(ymax, 2000)//4)) # TODO: Fix this shit
     plt.grid(b=True, which='major', color='#888888', linestyle='-', alpha=0.5)
 
     ax.legend()

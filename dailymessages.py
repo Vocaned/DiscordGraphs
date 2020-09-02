@@ -40,4 +40,4 @@ if __name__ == "__main__":
 
     print(f"[#{name}] Total messages: {len(data)}")
     print(f"[#{name}] Unique chatters: {len(users)}")
-    lineplot(Line(list(data.keys()), list(data.values()), color="red", label=f"Daily messages in #{name}"))
+    lineplot(list(data.keys()), list(data.values()), color="red", label=f"Daily messages in #{name}")

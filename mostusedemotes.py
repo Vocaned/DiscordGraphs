@@ -3,7 +3,6 @@ import re
 import typing
 from plotcreator import horizontalbar
 
-
 def mostusedemotes(jsonfile: str) -> typing.Tuple[str, dict]:
     """Returns discord channel name and a list of top 25 most used emotes"""
     with open(jsonfile) as f:
@@ -28,5 +27,4 @@ if __name__ == "__main__":
     jsonfile = input('DiscordChatExporter JSON file path: ')
     print('Parsing data...')
     name, data = mostusedemotes(jsonfile)
-
     horizontalbar(list(data.keys()), list(data.values()), 'Number of times used', 'Emote', 'Most used emotes in channel')
