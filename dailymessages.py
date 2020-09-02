@@ -1,54 +1,43 @@
+import typing
 import json
-from datetime import timedelta, date
-import numpy as np
+import datetime
 import matplotlib.pyplot as plt
 
-xtickdensity = 15
-ytickdensity = 500
+from utils import daterange, Line
+from plot import lineplot
 
+def dailymessages(jsonfile: str) -> typing.Tuple[str, dict, dict]:
+    """Returns discord channel name, a list of all user IDs who have sent a message and a dictionary including the number of messages every day from the start of the log to the end"""
+    with open(jsonfile, 'r') as f:
+        data = json.loads(f.read())
 
-with open('channel.json') as f:
-    furrydata = json.loads(f.read())
+    msgs = []
+    users = []
+    daily = {}
 
-print("Parsing data...")
+    # Init daily message count dictionary with all days between first and last message
+    start_dt = datetime.date.fromisoformat(data["messages"][0]["timestamp"].split("T")[0])
+    end_dt = datetime.date.fromisoformat(data["messages"][-1]["timestamp"].split("T")[0])
+    for dt in daterange(start_dt, end_dt):
+        daily[dt.strftime("%Y-%m-%d")] = 0
 
-msgs = []
-dailyfurry = {}
-usersfurry = []
+    for i in range(len(data["messages"])):
+        msg = data["messages"][i]["content"]
+        date = data["messages"][i]["timestamp"].split("T")[0]
+        user = data["messages"][i]["author"]["id"]
+        msgs.append(msg)
 
-# Init daily message count dictionary with all days between first and last message
-def daterange(date1, date2):
-    for n in range(int ((date2 - date1).days)+1):
-        yield date1 + timedelta(n)
-start_dt = date.fromisoformat(furrydata["messages"][0]["timestamp"].split("T")[0])
-end_dt = date.fromisoformat(furrydata["messages"][-1]["timestamp"].split("T")[0])
-for dt in daterange(start_dt, end_dt):
-    dailyfurry[dt.strftime("%Y-%m-%d")] = 0
+        if not user in users:
+            users.append(user)
 
-for i in range(len(furrydata["messages"])):
-    msg = furrydata["messages"][i]["content"]
-    date = furrydata["messages"][i]["timestamp"].split("T")[0]
-    user = furrydata["messages"][i]["author"]["id"]
-    msgs.append(msg)
+        daily[date] += 1
 
-    if not user in usersfurry:
-        usersfurry.append(user)
+    return (data['channel']['name'], users, daily)
 
-    dailyfurry[date] += 1
+if __name__ == "__main__":
+    print('Parsing data...')
+    name, users, data = dailymessages(input('DiscordChatExporter JSON file path: '))
 
-print()
-print(f'[#furry-channel] Total messages: {len(msgs)}')
-print(f'[#furry-channel] Unique chatters: {len(usersfurry)}')
-
-fig, ax = plt.subplots()
-
-#line1, = ax.plot(list(dailygeneral.keys()), list(dailygeneral.values()), color="blue", label='Daily unique messages in #general')
-line2, = ax.plot(list(dailyfurry.keys()), list(dailyfurry.values()), color="red", label='Daily messages in #furry-channel')
-
-plt.xticks(list(dailyfurry.keys())[::xtickdensity]) #show every n days in ticks
-plt.yticks(range(0, max(dailyfurry.values())+ytickdensity, ytickdensity))
-
-plt.grid(b=True, which='major', color='#888888', linestyle='-', alpha=0.5)
-
-ax.legend()
-plt.show()
+    print(f"[#{name}] Total messages: {len(data)}")
+    print(f"[#{name}] Unique chatters: {len(users)}")
+    lineplot(Line(list(data.keys()), list(data.values()), color="red", label=f"Daily messages in #{name}"))
