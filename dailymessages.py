@@ -1,10 +1,9 @@
 import typing
 import json
 import datetime
-import matplotlib.pyplot as plt
 
 from utils import daterange, Line
-from plot import lineplot
+from plotcreator import lineplot
 
 def dailymessages(jsonfile: str) -> typing.Tuple[str, dict, dict]:
     """Returns discord channel name, a list of all user IDs who have sent a message and a dictionary including the number of messages every day from the start of the log to the end"""
@@ -35,8 +34,9 @@ def dailymessages(jsonfile: str) -> typing.Tuple[str, dict, dict]:
     return (data['channel']['name'], users, daily)
 
 if __name__ == "__main__":
+    jsonfile = input('DiscordChatExporter JSON file path: ')
     print('Parsing data...')
-    name, users, data = dailymessages(input('DiscordChatExporter JSON file path: '))
+    name, users, data = dailymessages(jsonfile)
 
     print(f"[#{name}] Total messages: {len(data)}")
     print(f"[#{name}] Unique chatters: {len(users)}")
