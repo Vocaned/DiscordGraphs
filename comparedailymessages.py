@@ -23,7 +23,7 @@ if __name__ == "__main__":
             num += int(data[key])
         print(f"[#{name}] Total messages: {num}")
         print(f"[#{name}] Unique chatters: {len(users)}")
-        datas.append((list(data.keys()), list(data.values()), colors[color%len(colors)], f'Daily unique messages in #{name}'))
+        datas.append((list(data.keys()), list(data.values()), colors[color%len(colors)], f'Daily messages in #{name}'))
         color += 1
 
     multiplot(datas)

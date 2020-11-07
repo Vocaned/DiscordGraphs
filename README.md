@@ -10,6 +10,6 @@ Python scripts that generate graphs based on data downloaded from Discord using 
 
 Available scripts:
 
-* mostusedemotes.py - Top 10 most used emotes in a channel
+* mostusedemotes.py - Top 25 most used emotes in a channel
 * dailymessages.py - Graph how many messages are sent every day
 * comparedailymessages.py - Graph that compares different channels based on their number of daily messages
