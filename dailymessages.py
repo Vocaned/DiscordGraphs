@@ -38,6 +38,9 @@ if __name__ == "__main__":
     print('Parsing data...')
     name, users, data = dailymessages(jsonfile)
 
-    print(f"[#{name}] Total messages: {len(data)}")
+    num = 0
+    for key in data.keys():
+        num += int(data[key])
+    print(f"[#{name}] Total messages: {num}")
     print(f"[#{name}] Unique chatters: {len(users)}")
     lineplot(list(data.keys()), list(data.values()), color="red", label=f"Daily messages in #{name}")

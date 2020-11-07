@@ -13,6 +13,7 @@ def multiplot(lines: tuple):
         xmax = max(len(xy[0]), xmax)
         ymax = max(max(xy[1]), ymax)
 
+    plt.xticks(list(lines[0][0])[::xmax//10]) # TODO: Fix this shit
     plt.yticks(range(0, ymax+ymax//10, min(ymax, 2000)//4)) # TODO: Fix this shit
     plt.grid(b=True, which='major', color='#888888', linestyle='-', alpha=0.5)
 
@@ -26,7 +27,7 @@ def lineplot(x: list, y: list, **kwargs):
 
     xlen = len(x)
     ymax = max(y)
-    plt.xticks(list(x)[::xlen//5])
+    plt.xticks(list(x)[::xlen//10]) # TODO: Fix this shit
     plt.yticks(range(0, ymax+ymax//10, min(ymax, 2000)//4)) # TODO: Fix this shit
     plt.grid(b=True, which='major', color='#888888', linestyle='-', alpha=0.5)
 

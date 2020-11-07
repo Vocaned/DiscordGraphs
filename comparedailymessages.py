@@ -18,7 +18,10 @@ if __name__ == "__main__":
 
     for file in inputs:
         name, users, data = dailymessages(file)
-        print(f"[#{name}] Total messages: {len(data)}")
+        num = 0
+        for key in data.keys():
+            num += int(data[key])
+        print(f"[#{name}] Total messages: {num}")
         print(f"[#{name}] Unique chatters: {len(users)}")
         datas.append((list(data.keys()), list(data.values()), colors[color%len(colors)], f'Daily unique messages in #{name}'))
         color += 1
