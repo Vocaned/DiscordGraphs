@@ -3,6 +3,22 @@ import matplotlib.pyplot as plt
 from typing import List
 from utils import Line
 
+def multiplot(lines: tuple):
+    fig, ax = plt.subplots()
+
+    ymax = 0
+    xmax = 0
+    for xy in lines:
+        ax.plot(xy[0], xy[1], color=xy[2], label=xy[3])
+        xmax = max(len(xy[0]), xmax)
+        ymax = max(max(xy[1]), ymax)
+
+    plt.yticks(range(0, ymax+ymax//10, min(ymax, 2000)//4)) # TODO: Fix this shit
+    plt.grid(b=True, which='major', color='#888888', linestyle='-', alpha=0.5)
+
+    ax.legend()
+    plt.show()
+
 def lineplot(x: list, y: list, **kwargs):
     fig, ax = plt.subplots()
 
