@@ -2,7 +2,7 @@ import typing
 import json
 import datetime
 
-from utils import daterange, Line
+from utils import daterange, Line, checkChannelID
 from plotcreator import lineplot
 
 def dailymessages(jsonfile: str) -> typing.Tuple[str, dict, dict]:
@@ -34,7 +34,8 @@ def dailymessages(jsonfile: str) -> typing.Tuple[str, dict, dict]:
     return (data['channel']['name'], users, daily)
 
 if __name__ == "__main__":
-    jsonfile = input('DiscordChatExporter JSON file path: ')
+    channelid = input('Channel ID: ')
+    jsonfile = checkChannelID(channelid)
     print('Parsing data...')
     name, users, data = dailymessages(jsonfile)
 
@@ -43,4 +44,4 @@ if __name__ == "__main__":
         num += int(data[key])
     print(f"[#{name}] Total messages: {num}")
     print(f"[#{name}] Unique chatters: {len(users)}")
-    lineplot(list(data.keys()), list(data.values()), color="red", label=f"Daily messages in #{name}")
+    lineplot(list(data.keys()), list(data.values()), color="blue", label=f"Daily messages in #{name}")

@@ -3,12 +3,12 @@ from plotcreator import multiplot
 
 if __name__ == "__main__":
     color = 0
-    colors = ("red", "blue", "green", "yellow", "orange", "pink", "lime", "gray")
+    colors = ("blue", "red", "green", "yellow", "orange", "pink", "lime", "gray")
     datas = []
     inputs = []
     inp = None
 
-
+    # TODO: Update this to the new system check other files for example
     while inp != '':
         inp = input('DiscordChatExporter JSON file path. Empty to stop: ')
         if inp:
