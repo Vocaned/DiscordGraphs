@@ -6,9 +6,8 @@ from config import token
 
 EXPORTERPATH = 'DiscordChatExporter/DiscordChatExporter.Cli.dll'
 
-# TODO: DearPyGui gui.py
-
 def downloadMessages(token, id, file, after=None):
+    assert channelid.isdigit()
     print('Downloading messages.. This will take a while')
     args = ['-f', 'json',
             '-t', token,
@@ -24,7 +23,10 @@ def downloadMessages(token, id, file, after=None):
         exit(1)
     print('Channel exported')
 
-def main(channelid):
+if __name__ == "__main__":
+    channelid = input('Channel ID: ')
+    assert channelid.isdigit()
+
     file = f'data/{channelid}.json'
     if not os.path.exists(file):
         downloadMessages(token, channelid, file)
@@ -56,8 +58,3 @@ def main(channelid):
         # Write merged file
         with open(file, 'w') as f:
             json.dump(olddata, f, indent=2)
-
-if __name__ == "__main__":
-    channelid = input('Channel ID: ')
-    assert channelid.isdigit()
-    main(channelid)
