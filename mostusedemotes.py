@@ -30,4 +30,4 @@ if __name__ == "__main__":
     jsonfile = checkChannelID(channelid)
     print('Parsing data...')
     name, data = mostusedemotes(jsonfile)
-    horizontalbar(list(data.keys()), list(data.values()), 'Number of times used', 'Emote', f'Most used emotes in #{name} (as of {datetime.today()})')
+    horizontalbar(list(data.keys()), list(data.values()), 'Number of times used', 'Emote', f'Most used emotes in #{name} (as of {datetime.today().strftime("%Y-%m-%d")})')

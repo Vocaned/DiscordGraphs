@@ -32,4 +32,4 @@ if __name__ == "__main__":
     jsonfile = checkChannelID(channelid)
     print('Parsing data...')
     name, data = mostactivechatter(jsonfile)
-    horizontalbar(list(data.keys()), list(data.values()), 'Number of messages', 'User', f'Most active chatters in #{name} (as of {datetime.today()})')
+    horizontalbar(list(data.keys()), list(data.values()), 'Number of messages', 'User', f'Most active chatters in #{name} (as of {datetime.today().strftime("%Y-%m-%d")})')
