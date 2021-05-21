@@ -1,4 +1,5 @@
 from dailymessages import dailymessages
+from utils import checkChannelID
 from plotcreator import multiplot
 
 if __name__ == "__main__":
@@ -8,11 +9,11 @@ if __name__ == "__main__":
     inputs = []
     inp = None
 
-    # TODO: Update this to the new system check other files for example
     while inp != '':
-        inp = input('DiscordChatExporter JSON file path. Empty to stop: ')
-        if inp:
-            inputs.append(inp)
+        inp = input('Channel ID: (empty to stop) ')
+        if not inp:
+            continue
+        inputs.append(checkChannelID(inp))
 
     print('Parsing data...')
 
