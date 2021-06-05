@@ -2,7 +2,7 @@ import typing
 import json
 import datetime
 
-from utils import daterange, Line, checkChannelID
+from utils import daterange, checkChannelID
 from plotcreator import lineplot
 
 def dailymessagesperuser(jsonfile: str, userid: str) -> typing.Tuple[str, str, dict]:
@@ -11,8 +11,6 @@ def dailymessagesperuser(jsonfile: str, userid: str) -> typing.Tuple[str, str, d
         data = json.loads(f.read())
 
     username = None
-
-    msgs = []
     daily = {}
 
     # Init daily message count dictionary with all days between first and last message
@@ -25,12 +23,9 @@ def dailymessagesperuser(jsonfile: str, userid: str) -> typing.Tuple[str, str, d
         user = data["messages"][i]["author"]["id"]
         if user != userid:
             continue
-        msg = data["messages"][i]["content"]
+
         date = data["messages"][i]["timestamp"].split("T")[0]
-        msgs.append(msg)
-
         username = f'{data["messages"][i]["author"]["name"]}#{data["messages"][i]["author"]["discriminator"]}'
-
         daily[date] += 1
 
     # Remove empty messages from before the first message by user was sent

@@ -2,7 +2,7 @@ import typing
 import json
 import datetime
 
-from utils import daterange, Line, checkChannelID
+from utils import daterange, checkChannelID
 from plotcreator import lineplot
 
 def dailymessages(jsonfile: str) -> typing.Tuple[str, dict, dict]:
@@ -10,7 +10,6 @@ def dailymessages(jsonfile: str) -> typing.Tuple[str, dict, dict]:
     with open(jsonfile, 'r') as f:
         data = json.loads(f.read())
 
-    msgs = []
     users = []
     daily = {}
 
@@ -21,10 +20,8 @@ def dailymessages(jsonfile: str) -> typing.Tuple[str, dict, dict]:
         daily[dt.strftime("%Y-%m-%d")] = 0
 
     for i in range(len(data["messages"])):
-        msg = data["messages"][i]["content"]
         date = data["messages"][i]["timestamp"].split("T")[0]
         user = data["messages"][i]["author"]["id"]
-        msgs.append(msg)
 
         if not user in users:
             users.append(user)

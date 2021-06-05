@@ -1,6 +1,5 @@
 import matplotlib.pyplot as plt
 from typing import List
-from utils import Line
 
 def multiplot(lines: tuple):
     fig, ax = plt.subplots()
