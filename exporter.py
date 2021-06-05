@@ -27,6 +27,9 @@ if __name__ == "__main__":
     channelid = input('Channel ID: ')
     assert channelid.isdigit()
 
+    if not os.path.exists('data'):
+        os.makedirs('data')
+
     file = f'data/{channelid}.json'
     if not os.path.exists(file):
         downloadMessages(token, channelid, file)
