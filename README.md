@@ -6,8 +6,9 @@ Python scripts that generate graphs based on data downloaded from Discord using 
 1. Clone repo
 2. Download [DiscordChatExporter.CLI](https://github.com/Tyrrrz/DiscordChatExporter/releases) and extract it in a folder inside the repo called `DiscordChatExporter`
 3. Make a `config.py` file, inside it add `token = "[token here]"`
-4. Run `exporter.py` to download a channel
-5. Run a script
+4. Run `pip install -r requirements.txt` to install required packages (matplotlib)
+5. Run `exporter.py` to download a channel
+6. Run a script
 
 Available scripts:
 
