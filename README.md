@@ -15,5 +15,6 @@ Available scripts:
 * dailymessages.py - Graph how many messages are sent every day
 * comparedailymessages.py - Graph that compares different channels based on their number of daily messages
 * mostusedemotes.py - Top 25 most used emotes in a channel
+* mostusedemotesbyuser.py - Top 25 most used emotes in a channel by a specific user
 * mostactivechatter.py - Top 25 most active chatters in a channel
 * dailymessagesperuser.py - Graph how many messages are sent every day by a specific user
