@@ -2,7 +2,7 @@
 
 Python scripts that generate graphs based on data downloaded from Discord using [DiscordChatExporter](https://github.com/Tyrrrz/DiscordChatExporter)
 
-
+0. Make sure you have .NET Core v3.1 installed, as it's needed for DiscordChatExporter. Make sure dotnet is in your path and you have the correct version by running `dotnet --info`
 1. Clone repo
 2. Download [DiscordChatExporter.CLI](https://github.com/Tyrrrz/DiscordChatExporter/releases) and extract it in a folder inside the repo called `DiscordChatExporter`
 3. Make a `config.py` file, inside it add `token = "[token here]"`

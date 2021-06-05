@@ -3,6 +3,7 @@ import os
 import exporter
 
 def checkChannelID(id):
+    assert id.isdigit()
     if not os.path.exists(f'data/{id}.json'):
         exporter.main(id)
     return f'data/{id}.json'
