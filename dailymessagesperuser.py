@@ -48,4 +48,5 @@ if __name__ == "__main__":
     for key in data.keys():
         num += int(data[key])
     print(f"[#{name}] Total messages by {username}: {num}")
+    print(f"[#{name}] Average messages by {username} per day: {round(num/len(data), 2)}")
     lineplot(list(data.keys()), list(data.values()), color="blue", label=f"Daily messages in #{name} by {username}")
