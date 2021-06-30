@@ -12,6 +12,10 @@ def decompressdata(name: str) -> str:
     """Decompresses a zip and returns a json object"""
     path = os.path.join('data', name)
 
+    if not os.path.exists(f'{path}.zip'):
+        print('Could not find data for this channel. Download it using exporter.py first')
+        exit()
+
     with zipfile.ZipFile(f'{path}.zip') as file:
         return json.loads(file.read(f'{name}.json'))
 
