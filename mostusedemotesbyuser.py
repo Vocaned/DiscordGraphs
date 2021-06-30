@@ -2,13 +2,12 @@ import json
 import re
 import typing
 from datetime import datetime
-from utils import checkChannelID
+from utils import decompressdata
 from plotcreator import horizontalbar
 
-def mostusedemotesbyuser(jsonfile: str, userid: str) -> typing.Tuple[str, str, dict]:
+def mostusedemotesbyuser(channelid: str, userid: str) -> typing.Tuple[str, str, dict]:
     """Returns discord channel name, user name and a list of top 25 most used emotes"""
-    with open(jsonfile) as f:
-        data = json.loads(f.read())
+    data = decompressdata(channelid)
 
     username = None
     emotes = {}
@@ -34,7 +33,8 @@ def mostusedemotesbyuser(jsonfile: str, userid: str) -> typing.Tuple[str, str, d
 if __name__ == "__main__":
     channelid = input('Channel ID: ')
     userid = input('User ID: ')
-    jsonfile = checkChannelID(channelid)
+    assert channelid.isdigit()
+    assert userid.isdigit()
     print('Parsing data...')
-    name, username, data = mostusedemotesbyuser(jsonfile, userid)
+    name, username, data = mostusedemotesbyuser(channelid, userid)
     horizontalbar(list(data.keys()), list(data.values()), 'Number of times used', 'Emote', f'Most used emotes in #{name} by {username} (as of {datetime.today().strftime("%Y-%m-%d")})')

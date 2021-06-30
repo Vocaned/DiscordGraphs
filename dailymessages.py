@@ -2,13 +2,12 @@ import typing
 import json
 import datetime
 
-from utils import daterange, checkChannelID
+from utils import daterange, decompressdata
 from plotcreator import lineplot
 
-def dailymessages(jsonfile: str) -> typing.Tuple[str, dict, dict]:
+def dailymessages(channelid: str) -> typing.Tuple[str, dict, dict]:
     """Returns discord channel name, a list of all user IDs who have sent a message and a dictionary including the number of messages every day from the start of the log to the end"""
-    with open(jsonfile, 'r') as f:
-        data = json.loads(f.read())
+    data = decompressdata(channelid)
 
     users = []
     daily = {}
@@ -32,9 +31,9 @@ def dailymessages(jsonfile: str) -> typing.Tuple[str, dict, dict]:
 
 if __name__ == "__main__":
     channelid = input('Channel ID: ')
-    jsonfile = checkChannelID(channelid)
+    assert channelid.isdigit()
     print('Parsing data...')
-    name, users, data = dailymessages(jsonfile)
+    name, users, data = dailymessages(channelid)
 
     num = 0
     for key in data.keys():

@@ -1,13 +1,12 @@
 import json
 import typing
 from datetime import datetime
-from utils import checkChannelID
+from utils import decompressdata
 from plotcreator import horizontalbar
 
-def mostactivechatter(jsonfile: str) -> typing.Tuple[str, dict]:
+def mostactivechatter(channelid: str) -> typing.Tuple[str, dict]:
     """Returns discord channel name and a list of top 25 most active chatters"""
-    with open(jsonfile) as f:
-        data = json.loads(f.read())
+    data = decompressdata(channelid)
 
     users = {}
     userdict = {}
@@ -28,7 +27,7 @@ def mostactivechatter(jsonfile: str) -> typing.Tuple[str, dict]:
 
 if __name__ == "__main__":
     channelid = input('Channel ID: ')
-    jsonfile = checkChannelID(channelid)
+    assert channelid.isdigit()
     print('Parsing data...')
-    name, data = mostactivechatter(jsonfile)
+    name, data = mostactivechatter(channelid)
     horizontalbar(list(data.keys()), list(data.values()), 'Number of messages', 'User', f'Most active chatters in #{name} (as of {datetime.today().strftime("%Y-%m-%d")})')

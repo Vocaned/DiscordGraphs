@@ -1,5 +1,4 @@
 from dailymessages import dailymessages
-from utils import checkChannelID
 from plotcreator import multiplot
 
 if __name__ == "__main__":
@@ -13,7 +12,8 @@ if __name__ == "__main__":
         inp = input('Channel ID: (empty to stop) ')
         if not inp:
             continue
-        inputs.append(checkChannelID(inp))
+        assert inp.isdigit()
+        inputs.append(inp)
 
     print('Parsing data...')
 

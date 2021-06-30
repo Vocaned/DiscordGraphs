@@ -3,11 +3,13 @@ import sys
 import os
 import json
 from config import token
+from utils import compressdata, decompressdata
 
 EXPORTERPATH = 'DiscordChatExporter/DiscordChatExporter.Cli.dll'
 
-def downloadMessages(token, id, file, after=None):
+def downloadMessages(token, id, compress, after=None):
     assert channelid.isdigit()
+    file = os.path.join('data', f'{channelid}.json')
     print('Downloading messages.. This will take a while!')
     args = ['-f', 'json',
             '-t', token,
@@ -21,7 +23,14 @@ def downloadMessages(token, id, file, after=None):
         print('Could not download messages')
         print(output.decode('utf-8'))
         exit(1)
-    print('Channel exported')
+
+    if compress:
+        print('Compressing data')
+        with open(file) as f:
+            data = json.load(f)
+        os.remove(file)
+        compressdata(data, channelid)
+        print('Channel exported')
 
 def main(channelid: str):
     assert channelid.isdigit()
@@ -29,23 +38,22 @@ def main(channelid: str):
     if not os.path.exists('data'):
         os.makedirs('data')
 
-    file = f'data/{channelid}.json'
-    if not os.path.exists(file):
-        downloadMessages(token, channelid, file)
+    if not os.path.exists(os.path.join('data', f'{channelid}.zip')):
+        downloadMessages(token, channelid, True)
     else:
-        print('Initializing...')
+        print('Existing data found. Initializing...')
         # FIXME: THIS WILL KILL RAM USAGE
-        with open(file) as f:
-            olddata = json.load(f)
+        olddata = decompressdata(channelid)
 
         # Get last message timestamp
         after = olddata['messages'][-1]['timestamp']
 
-        downloadMessages(token, channelid, file, after)
+        downloadMessages(token, channelid, False, after)
 
-        print('Updating messages')
-        with open(file) as f:
+        print('Updating data')
+        with open(os.path.join('data', f'{channelid}.json')) as f:
             newdata = json.load(f)
+        os.remove(os.path.join('data', f'{channelid}.json'))
 
         # Append new messages to old ones
         # FIXME: HACK: skipping first message since it's duplicate, it shouldn't be downloaded at all
@@ -57,9 +65,10 @@ def main(channelid: str):
         olddata['guild'] = newdata['guild']
         olddata['channel'] = newdata['channel']
 
-        # Write merged file
-        with open(file, 'w') as f:
-            json.dump(olddata, f)
+        print('Compressing data')
+        compressdata(olddata, channelid)
+
+        print(f'Channel exported')
 
 if __name__ == "__main__":
     channelid = input('Channel ID: ')
